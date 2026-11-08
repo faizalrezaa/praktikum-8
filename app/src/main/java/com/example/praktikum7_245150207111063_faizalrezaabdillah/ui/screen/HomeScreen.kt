@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
@@ -26,10 +25,11 @@ import com.example.praktikum_6_245150207111063_faizalrezaabdillah.ui.home.HomeUi
 @Composable
 fun HomeScreen(
     uiState: HomeUiState,
+    searchQuery: String,
+    onSearchQueryChange: (String) -> Unit,
     onStudentClick: (Int) -> Unit,
     onRetry: () -> Unit,
-    onSearchQueryChanged: (String) -> Unit,
-    onSearchClick: () -> Unit
+    onRefresh: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -38,18 +38,19 @@ fun HomeScreen(
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             OutlinedTextField(
-                value = uiState.searchQuery,
-                onValueChange = onSearchQueryChanged,
-                label = { Text("Cari Mahasiswa") },
-                modifier = Modifier.weight(1f),
-                singleLine = true
+                value = searchQuery,
+                onValueChange = onSearchQueryChange,
+                label = { Text("Cari profil") },
+                modifier = Modifier.weight(1f)
             )
-            Spacer(modifier = Modifier.width(8.dp))
-            Button(onClick = onSearchClick) {
-                Text("Cari")
+            Button(
+                onClick = onRefresh
+            ) {
+                Text("Refresh")
             }
         }
 
